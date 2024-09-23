@@ -1,0 +1,31 @@
+!Router- PE1-FILIAL-A
+!
+!Router configuration
+!
+enable
+configure terminal
+hostname PE1-FILIAL-A
+!
+interface loopback 0
+    ip address 10.10.10.10 255.255.255.255
+    description PE1-FILIAL-A loopback 
+exit
+!
+interface f0/0
+    ip address 100.201.10.1 255.255.255.252
+no shutdown
+    description to-P4
+!
+!----------------------------------------------------------------
+router ospf 100
+    network 10.10.10.10 0.0.0.0 area 0
+    network 100.201.10.1 0.0.0.0 area 0
+exit
+!
+do sh run | s ospf
+end
+!
+cop r st
+
+
+

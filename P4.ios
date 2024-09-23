@@ -1,0 +1,44 @@
+!Router P4
+!
+!Router configuration
+!
+enable
+configure terminal
+hostname P4
+!
+interface loopback 0
+    ip address 4.4.4.4 255.255.255.255
+    description P4-router 
+exit
+!
+interface f0/0
+    ip address 100.201.10.1 255.255.255.252
+no shutdown
+    description to-PE1-FILIAL-A
+!
+interface f2/0
+    ip address 10.21.20.1 255.255.255.252
+no shutdown
+    description to-P7   
+
+!
+interface f1/0
+    ip address 10.21.23.1 255.255.255.252
+no shutdown
+    description to-P5 
+!
+!-------------------------------------------------------------------------
+router ospf 100
+exit
+    network 4.4.4.4  0.0.0.0 area 0 
+    network 100.201.10.1  0.0.0.0 area 0 
+    network 10.21.20.1  0.0.0.0 area 0 
+    network 10.21.23.1  0.0.0.0 area 0 
+!
+do sh run | s ospf
+
+end
+!
+cop r st
+
+

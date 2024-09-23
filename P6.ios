@@ -1,0 +1,37 @@
+!Router P6
+!
+enable
+configure terminal
+hostname P6
+!
+interface loopback 0
+    ip address 6.6.6.6 255.255.255.255
+    !description 
+exit
+!
+interface f1/0
+    ip address 10.21.21.2 255.255.255.252
+no shutdown
+    description to-P7 
+!
+interface f2/0
+    ip address 10.21.22.2 255.255.255.252 
+no shutdown
+    description to-P5
+!
+interface f0/0
+    ip address 200.100.20.1 255.255.255.252
+no shutdown
+    description to-PE2-FILIAL-B
+!----------------------------------------------------------------
+router ospf 100
+    network 6.6.6.6 0.0.0.0 area 0
+    network 10.21.21.2 0.0.0.0 area 0
+    network 10.21.22.2 0.0.0.0 area 0
+    network 200.100.20.1 0.0.0.0 area 0
+exit
+!
+do sh run | s ospf
+end
+!
+cop r st

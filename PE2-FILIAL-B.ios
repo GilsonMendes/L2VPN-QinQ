@@ -1,0 +1,26 @@
+!Router PE2-FILIAL-B
+!
+enable
+configure terminal
+hostname PE2-FILIAL-B
+!
+interface loopback 0
+    ip address 20.20.20.20 255.255.255.255
+    !description 
+exit
+!
+interface f0/0
+    ip address 200.100.20.2 255.255.255.252
+no shutdown
+    description to-P6
+!
+!----------------------------------------------------------------
+router ospf 100
+    network 20.20.20.20 0.0.0.0 area 0
+    network 200.100.20.2 0.0.0.0 area 0
+exit
+!
+do sh run | s ospf
+end
+!
+cop r st
